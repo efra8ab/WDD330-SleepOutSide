@@ -241,6 +241,19 @@ button {
   grid-column: 3;
 }
 
+.cart-empty {
+  list-style: none;
+  padding: 1rem 0;
+  color: var(--dark-grey);
+}
+
+.cart-total {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: right;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
