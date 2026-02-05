@@ -41,3 +41,40 @@ export function renderListWithTemplate(
   const htmlStrings = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+  if (callback) {
+    callback(data);
+  }
+}
+
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
+}
+
+export async function loadHeaderFooter() {
+  const headerElement = document.querySelector("#main-header");
+  const footerElement = document.querySelector("#main-footer");
+  const [headerTemplate, footerTemplate] = await Promise.all([
+    loadTemplate("/partials/header.html"),
+    loadTemplate("/partials/footer.html"),
+  ]);
+
+  if (headerElement) {
+    renderWithTemplate(headerTemplate, headerElement);
+  }
+  if (footerElement) {
+    renderWithTemplate(footerTemplate, footerElement);
+  }
+}
+
+export function formatCategoryName(category) {
+  if (!category) return "";
+  return category
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
