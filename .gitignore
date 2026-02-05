@@ -5,5 +5,5 @@ web_modules
 node_modules
 dist
 .env
-*.txt
 *.docx
+*.txt
