@@ -33,11 +33,32 @@ export default class ProductDetails {
 
   renderProductDetails() {
     const section = document.querySelector(".product-detail");
-    section.innerHTML = `<h3>${this.product.Brand.Name}</h3>
-      <h2 class="divider">${this.product.NameWithoutBrand}</h2>
-      <img class="divider" src="${this.product.Image}" alt="${this.product.Name}" />
-      <p class="product-card__price">$${this.product.FinalPrice}</p>
-      <p class="product__color">${this.product.Colors[0].ColorName}</p>
+    const name = this.product.NameWithoutBrand || this.product.Name || "";
+    const brand = this.product.Brand?.Name || "";
+    const images = this.product.Images || {};
+    const image = images.PrimaryLarge || this.product.Image || "";
+    const srcset = [
+      images.PrimarySmall && `${images.PrimarySmall} 80w`,
+      images.PrimaryMedium && `${images.PrimaryMedium} 160w`,
+      images.PrimaryLarge && `${images.PrimaryLarge} 320w`,
+      images.PrimaryExtraLarge && `${images.PrimaryExtraLarge} 600w`,
+    ]
+      .filter(Boolean)
+      .join(", ");
+    const price = Number(this.product.FinalPrice || 0).toFixed(2);
+    const color = this.product.Colors?.[0]?.ColorName;
+
+    section.innerHTML = `<h3>${brand}</h3>
+      <h2 class="divider">${name}</h2>
+      <img
+        class="divider"
+        src="${image}"
+        ${srcset ? `srcset="${srcset}"` : ""}
+        sizes="(min-width: 700px) 500px, 90vw"
+        alt="${this.product.Name || name}"
+      />
+      <p class="product-card__price">$${price}</p>
+      ${color ? `<p class="product__color">${color}</p>` : ""}
       <p class="product__description">${this.product.DescriptionHtmlSimple}</p>
       <div class="product-detail__add">
         <button id="addToCart">Add to Cart</button>

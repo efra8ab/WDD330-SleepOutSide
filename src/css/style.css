@@ -156,6 +156,53 @@ button {
   padding: 1rem;
 }
 
+.breadcrumbs {
+  padding: 0.5rem 1rem;
+  font-size: var(--small-font);
+  color: var(--dark-grey);
+}
+
+.breadcrumbs:empty {
+  display: none;
+}
+
+.categories {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.category-list {
+  display: flex;
+  flex-flow: row wrap;
+  list-style-type: none;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.category-card {
+  flex: 1 1 45%;
+  margin: 0.5em;
+  padding: 0.5em;
+  border: 1px solid var(--light-grey);
+  max-width: 220px;
+  text-align: center;
+}
+
+.category-card a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
+.category-card img {
+  width: 80px;
+  height: 80px;
+}
+
 .product-list {
   display: flex;
   flex-flow: row wrap;
