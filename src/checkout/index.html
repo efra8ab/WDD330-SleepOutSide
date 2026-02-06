@@ -18,6 +18,61 @@
     <main class="divider">
       <section class="products">
         <h2>Review & Place your Order</h2>
+        <div class="checkout">
+          <form id="checkout-form" class="checkout-form">
+            <fieldset>
+              <legend>Customer Name</legend>
+              <label for="fname">First Name</label>
+              <input id="fname" name="fname" type="text" required />
+
+              <label for="lname">Last Name</label>
+              <input id="lname" name="lname" type="text" required />
+            </fieldset>
+
+            <fieldset>
+              <legend>Address</legend>
+              <label for="street">Street Address</label>
+              <input id="street" name="street" type="text" required />
+
+              <label for="city">City</label>
+              <input id="city" name="city" type="text" required />
+
+              <label for="state">State</label>
+              <input id="state" name="state" type="text" required />
+
+              <label for="zip">Zip Code</label>
+              <input id="zip" name="zip" type="text" required />
+            </fieldset>
+
+            <fieldset>
+              <legend>Payment</legend>
+              <label for="cardNumber">Credit Card Number</label>
+              <input id="cardNumber" name="cardNumber" type="text" required />
+
+              <label for="expiration">Expiration Date</label>
+              <input id="expiration" name="expiration" type="text" required />
+
+              <label for="code">Security Code</label>
+              <input id="code" name="code" type="text" required />
+            </fieldset>
+
+            <button type="submit">Checkout</button>
+            <p id="checkout-message" class="checkout-message" aria-live="polite"></p>
+          </form>
+
+          <aside class="order-summary" aria-label="Order Summary">
+            <h3>Order Summary</h3>
+            <ul>
+              <li>Items (<span id="item-count">0</span>)</li>
+              <li>Subtotal: <span id="subtotal">$0.00</span></li>
+              <li>Tax: <span id="tax">$0.00</span></li>
+              <li>Shipping: <span id="shipping">$0.00</span></li>
+              <li class="order-total">
+                Order Total: <span id="order-total">$0.00</span>
+              </li>
+            </ul>
+          </aside>
+        </div>
       </section>
     </main>
 
