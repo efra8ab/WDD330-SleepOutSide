@@ -1,19 +1,33 @@
 import { renderListWithTemplate } from "./utils.mjs";
 
-const supportedProducts = ["344YJ", "880RR", "985PR", "985RF"];
-
-function productCardTemplate(product) {
+function productCardTemplate(product, category) {
   const name = product.NameWithoutBrand || product.Name;
   const brand = product.Brand?.Name || "";
-  const image = product.Image || "";
-  const productLink = `product_pages/index.html?product=${product.Id}`;
+  const images = product.Images || {};
+  const image = images.PrimaryMedium || product.Image || "";
+  const srcset = [
+    images.PrimarySmall && `${images.PrimarySmall} 80w`,
+    images.PrimaryMedium && `${images.PrimaryMedium} 160w`,
+    images.PrimaryLarge && `${images.PrimaryLarge} 320w`,
+    images.PrimaryExtraLarge && `${images.PrimaryExtraLarge} 600w`,
+  ]
+    .filter(Boolean)
+    .join(", ");
+  const productLink = category
+    ? `/product_pages/index.html?product=${product.Id}&category=${category}`
+    : `/product_pages/index.html?product=${product.Id}`;
 
   return `<li class="product-card">
     <a href="${productLink}">
-      <img src="${image}" alt="Image of ${name}">
+      <img
+        src="${image}"
+        ${srcset ? `srcset="${srcset}"` : ""}
+        sizes="(min-width: 900px) 250px, (min-width: 600px) 45vw, 90vw"
+        alt="Image of ${name}"
+      >
       <h3 class="card__brand">${brand}</h3>
       <h2 class="card__name">${name}</h2>
-      <p class="product-card__price">$${product.FinalPrice.toFixed(2)}</p>
+      <p class="product-card__price">$${Number(product.FinalPrice).toFixed(2)}</p>
     </a>
   </li>`;
 }
@@ -26,16 +40,14 @@ export default class ProductList {
   }
 
   async init() {
-    const list = await this.dataSource.getData();
-    const listToRender = list.filter((product) =>
-      supportedProducts.includes(product.Id),
-    );
-    this.renderList(listToRender);
+    const list = await this.dataSource.getData(this.category);
+    this.renderList(list);
+    return list;
   }
 
   renderList(list) {
     renderListWithTemplate(
-      productCardTemplate,
+      (item) => productCardTemplate(item, this.category),
       this.listElement,
       list,
       "afterbegin",
