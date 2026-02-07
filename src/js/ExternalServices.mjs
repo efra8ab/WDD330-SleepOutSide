@@ -1,24 +1,13 @@
 const baseURL = import.meta.env.VITE_SERVER_URL;
 
 async function convertToJson(res) {
-  const contentType = res.headers.get("content-type") || "";
-  let data;
-  if (contentType.includes("application/json")) {
-    data = await res.json();
-  } else {
-    data = await res.text();
-  }
+  const jsonResponse = await res.json();
 
   if (!res.ok) {
-    const message =
-      (typeof data === "string" && data.trim()) ||
-      data?.message ||
-      data?.error ||
-      `Bad Response: ${res.status}`;
-    throw new Error(message);
+    throw { name: "servicesError", message: jsonResponse };
   }
 
-  return data;
+  return jsonResponse;
 }
 
 export default class ExternalServices {

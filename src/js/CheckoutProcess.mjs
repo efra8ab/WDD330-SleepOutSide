@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { alertMessage, getLocalStorage, setLocalStorage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 function packageItems(items) {
@@ -102,6 +102,24 @@ export default class CheckoutProcess {
     order.shipping = Number(this.shipping.toFixed(2));
     order.tax = this.tax.toFixed(2);
 
-    return this.services.checkout(order);
+    try {
+      const response = await this.services.checkout(order);
+      setLocalStorage(this.key, []);
+      window.location.href = "/checkout/success.html";
+      return response;
+    } catch (error) {
+      let message = "There was a problem submitting your order.";
+      if (error?.message) {
+        if (typeof error.message === "string") {
+          message = error.message;
+        } else if (error.message?.message) {
+          message = error.message.message;
+        } else {
+          message = JSON.stringify(error.message);
+        }
+      }
+      alertMessage(message);
+      return null;
+    }
   }
 }

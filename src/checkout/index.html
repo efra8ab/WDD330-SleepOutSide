@@ -38,22 +38,64 @@
               <input id="city" name="city" type="text" required />
 
               <label for="state">State</label>
-              <input id="state" name="state" type="text" required />
+              <input
+                id="state"
+                name="state"
+                type="text"
+                required
+                minlength="2"
+                maxlength="2"
+                placeholder="UT"
+              />
 
               <label for="zip">Zip Code</label>
-              <input id="zip" name="zip" type="text" required />
+              <input
+                id="zip"
+                name="zip"
+                type="text"
+                required
+                inputmode="numeric"
+                pattern="\\d{5}"
+                maxlength="5"
+                placeholder="84000"
+              />
             </fieldset>
 
             <fieldset>
               <legend>Payment</legend>
               <label for="cardNumber">Credit Card Number</label>
-              <input id="cardNumber" name="cardNumber" type="text" required />
+              <input
+                id="cardNumber"
+                name="cardNumber"
+                type="text"
+                required
+                inputmode="numeric"
+                pattern="\\d{16}"
+                maxlength="16"
+                placeholder="1234123412341234"
+              />
 
               <label for="expiration">Expiration Date</label>
-              <input id="expiration" name="expiration" type="text" required />
+              <input
+                id="expiration"
+                name="expiration"
+                type="text"
+                required
+                pattern="(0[1-9]|1[0-2])\\/\\d{2}"
+                placeholder="12/30"
+              />
 
               <label for="code">Security Code</label>
-              <input id="code" name="code" type="text" required />
+              <input
+                id="code"
+                name="code"
+                type="text"
+                required
+                inputmode="numeric"
+                pattern="\\d{3}"
+                maxlength="3"
+                placeholder="123"
+              />
             </fieldset>
 
             <button type="submit">Checkout</button>

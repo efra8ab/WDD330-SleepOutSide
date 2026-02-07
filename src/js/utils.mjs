@@ -78,3 +78,27 @@ export function formatCategoryName(category) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
+
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement("div");
+  alert.classList.add("alert");
+  alert.innerHTML = `
+    <p>${message}</p>
+    <button class="alert-close" type="button" aria-label="Dismiss alert">x</button>
+  `;
+
+  alert.addEventListener("click", (event) => {
+    if (event.target.classList.contains("alert-close")) {
+      alert.remove();
+    }
+  });
+
+  const main = document.querySelector("main");
+  if (main) {
+    main.prepend(alert);
+  }
+
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
+}
