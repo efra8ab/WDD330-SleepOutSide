@@ -131,6 +131,25 @@ button {
   fill: gray;
 }
 
+.cart.is-animating svg {
+  animation: cart-bounce 600ms ease;
+}
+
+@keyframes cart-bounce {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.2) rotate(-6deg);
+  }
+  60% {
+    transform: scale(0.95) rotate(6deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 /* End cart icon styles */
 
 .mission {
@@ -381,6 +400,56 @@ button {
   border: 0;
   color: inherit;
   font-size: 1rem;
+  cursor: pointer;
+}
+
+.cta-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 1000;
+}
+
+.cta-modal {
+  width: min(420px, 100%);
+  background: #fff;
+  border: 2px solid var(--primary-color);
+  padding: 1.25rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.cta-title {
+  font-weight: 700;
+  padding: 0;
+}
+
+.cta-text p {
+  margin: 0;
+  padding: 0;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background: var(--secondary-color);
+  color: #fff;
+  text-decoration: none;
+}
+
+.cta-close {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--light-grey);
+  background: #fff;
   cursor: pointer;
 }
 

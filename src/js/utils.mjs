@@ -69,6 +69,8 @@ export async function loadHeaderFooter() {
   if (footerElement) {
     renderWithTemplate(footerTemplate, footerElement);
   }
+
+  showRegisterCTA();
 }
 
 export function formatCategoryName(category) {
@@ -101,4 +103,56 @@ export function alertMessage(message, scroll = true) {
   if (scroll) {
     window.scrollTo(0, 0);
   }
+}
+
+export function animateCartIcon() {
+  const cart = document.querySelector(".cart");
+  if (!cart) return;
+
+  cart.classList.remove("is-animating");
+  void cart.offsetWidth;
+  cart.classList.add("is-animating");
+
+  cart.addEventListener(
+    "animationend",
+    () => {
+      cart.classList.remove("is-animating");
+    },
+    { once: true },
+  );
+}
+
+function showRegisterCTA() {
+  if (!document.querySelector(".hero")) return;
+
+  const existing = document.querySelector(".cta-backdrop");
+  if (existing) {
+    existing.remove();
+  }
+
+  const backdrop = document.createElement("div");
+  backdrop.classList.add("cta-backdrop");
+  backdrop.innerHTML = `
+    <div class="cta-modal" role="dialog" aria-modal="true" aria-labelledby="cta-title">
+      <div class="cta-text">
+        <p id="cta-title" class="cta-title">Register and Win a Gear Giveaway</p>
+        <p>Join SleepOutside and get entered to win monthly outdoor gear.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="cta-button" href="/register/index.html">Register</a>
+        <button class="cta-close" type="button">Maybe later</button>
+      </div>
+    </div>
+  `;
+
+  backdrop.addEventListener("click", (event) => {
+    if (
+      event.target.classList.contains("cta-backdrop") ||
+      event.target.classList.contains("cta-close")
+    ) {
+      backdrop.remove();
+    }
+  });
+
+  document.body.append(backdrop);
 }
